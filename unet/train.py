@@ -1,3 +1,4 @@
+import os
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -8,9 +9,12 @@ from tqdm import tqdm
 from model import UNet
 from dataset import FoggyDataset
 
-def train(model, foggy_dataset, gt_dataset, optimizer, criterion, batch_size=8, epochs=10):
+def train(model, foggy_dataset, gt_dataset, optimizer, criterion, batch_size=8, epochs=10, save_dir='weights'):
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     model.to(device)
+
+    # Create save directory if it doesn't exist
+    os.makedirs(save_dir, exist_ok=True)
 
     train_dataset = FoggyDataset(foggy_dataset, gt_dataset)
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
@@ -46,8 +50,9 @@ def train(model, foggy_dataset, gt_dataset, optimizer, criterion, batch_size=8, 
         # Save best model
         if avg_epoch_loss < best_loss:
             best_loss = avg_epoch_loss
-            torch.save(model.state_dict(), 'best.pth')
-            print(f"\n✓ Saved best model with loss: {best_loss:.4f}")
+            save_path = os.path.join(save_dir, 'best.pth')
+            torch.save(model.state_dict(), save_path)
+            print(f"\n✓ Saved best model to {save_path} with loss: {best_loss:.4f}")
     
     print(f"\nTraining complete! Best loss: {best_loss:.4f}")
     

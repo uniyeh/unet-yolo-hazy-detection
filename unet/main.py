@@ -19,6 +19,8 @@ def main():
                        help='Batch size')
     parser.add_argument('--lr', type=float, default=1e-4,
                        help='Learning rate')
+    parser.add_argument('--save-dir', type=str, default='weights',
+                       help='Directory to save model weights')
     
     args = parser.parse_args()
     
@@ -33,6 +35,7 @@ def main():
     print(f"  Clear: {args.clear_dir}")
     print(f"  Epochs: {args.epochs}")
     print(f"  Batch size: {args.batch_size}")
+    print(f"  Save dir: {args.save_dir}")
     
     train(
         model=model,
@@ -41,7 +44,8 @@ def main():
         optimizer=optimizer,
         criterion=criterion,
         batch_size=args.batch_size,
-        epochs=args.epochs
+        epochs=args.epochs,
+        save_dir=args.save_dir
     )
     
     print("\n✅ Done! Model saved to 'best.pth'")
