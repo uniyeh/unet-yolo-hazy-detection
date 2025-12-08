@@ -27,4 +27,4 @@ class UNet(nn.Module):
         x = F.relu(self.conv8(x))
         x = F.relu(self.conv9(x))
         x = self.conv10(x)
-        return x
+        return x 
