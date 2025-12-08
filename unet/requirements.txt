@@ -1,0 +1,15 @@
+# PyTorch and related packages
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Image processing
+Pillow>=9.0.0
+
+# Progress bar
+tqdm>=4.65.0
+
+# Tensorboard for visualization (optional)
+tensorboard>=2.12.0
+
+# Numpy for array operations
+numpy>=1.24.0
